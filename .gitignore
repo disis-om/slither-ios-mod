@@ -5,8 +5,10 @@ dist/
 # at runtime, so they stay out of the repo.
 assets/
 
-# The input IPA this tree was unpacked from. Keep it locally, not in git.
+# IPAs: the input this tree was unpacked from, and any build downloaded
+# from CI. Both stay local.
 *.ipa
+SHA256SUMS
 
 # Local scratch
 work/
