@@ -1,0 +1,95 @@
+name: Pack slither.io iOS IPA
+
+on:
+  workflow_dispatch:
+    inputs:
+      label:
+        description: Short label folded into the artifact name
+        required: false
+        default: edit
+  push:
+    branches: [main]
+    paths:
+      - 'extracted/**'
+      - 'mod-ui/**'
+      - 'Scripts/**'
+      - 'Tests/**'
+      - '.github/workflows/pack-ipa.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  pack:
+    # No compilation happens here: the app binary ships AOT-compiled inside the
+    # bundle, so packaging is a ZIP and needs no macOS runner.
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Apply mod menu pages
+        run: python3 Scripts/patch-mod-menu.py
+
+      - name: Verify bundle contract
+        run: python3 Tests/bundle_contract_test.py
+
+      - name: Read bundle identity
+        id: identity
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import plistlib, pathlib
+          app = next(pathlib.Path("extracted/Payload").glob("*.app"))
+          info = plistlib.loads((app / "Info.plist").read_bytes())
+          print(f"app_dir={app}")
+          print(f"bundle_id={info['CFBundleIdentifier']}")
+          print(f"version={info['CFBundleShortVersionString']}")
+          print(f"build={info['CFBundleVersion']}")
+          PY
+
+      - name: Package unsigned IPA
+        id: package
+        env:
+          LABEL: ${{ inputs.label || 'main' }}
+          VERSION: ${{ steps.identity.outputs.version }}
+        run: |
+          set -euo pipefail
+          NAME="slither-ios-${VERSION}-${LABEL}-${GITHUB_RUN_NUMBER}-unsigned.ipa"
+          echo "name=$NAME" >> "$GITHUB_OUTPUT"
+
+          rm -rf stage dist
+          mkdir -p stage dist
+          cp -R extracted/Payload stage/Payload
+
+          # Any edit invalidates the original signature; esign / AltStore /
+          # Sideloadly install their own. Ship the bundle without the stale one.
+          find stage/Payload -name '_CodeSignature' -type d -prune -exec rm -rf {} +
+          find stage/Payload -name 'embedded.mobileprovision' -type f -delete
+
+          ( cd stage && zip -qry "../dist/$NAME" Payload )
+          ( cd dist && sha256sum "$NAME" > SHA256SUMS && cat SHA256SUMS )
+
+      - name: Summarise
+        env:
+          NAME: ${{ steps.package.outputs.name }}
+        run: |
+          {
+            echo "### Packed \`$NAME\`"
+            echo
+            echo "| field | value |"
+            echo "| --- | --- |"
+            echo "| bundle id | \`${{ steps.identity.outputs.bundle_id }}\` |"
+            echo "| version | ${{ steps.identity.outputs.version }} (${{ steps.identity.outputs.build }}) |"
+            echo "| size | $(du -h "dist/$NAME" | cut -f1) |"
+            echo "| sha256 | \`$(cut -d' ' -f1 dist/SHA256SUMS)\` |"
+            echo
+            echo "Unsigned on purpose - re-sign on install."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v5
+        with:
+          name: slither-ios-ipa-${{ github.run_number }}
+          if-no-files-found: error
+          path: |
+            dist/*.ipa
+            dist/SHA256SUMS

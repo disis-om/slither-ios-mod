@@ -1,0 +1,455 @@
+<?xml version="1.0" ?>
+<swc xmlns="http://www.adobe.com/flash/swccatalog/9">
+    <versions>
+        <swc version="1.2"/>
+        <compiler name="ActionScript Compiler" version="3.2.0" build="0"/>
+    </versions>
+    <features>
+        <feature-script-deps/>
+    </features>
+    <libraries>
+        <library path="library.swf">
+            <script name="com/distriqt/extension/application/Accessibility" mod="1721783980912">
+                <def id="com.distriqt.extension.application:Accessibility"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Object" type="i"/>
+            </script>
+            <script name="com/distriqt/extension/application/Application" mod="1721783980912">
+                <def id="com.distriqt.extension.application:Application"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Error" type="e"/>
+                <dep id="Function" type="s"/>
+                <dep id="JSON" type="e"/>
+                <dep id="Number" type="s"/>
+                <dep id="Object" type="e"/>
+                <dep id="String" type="s"/>
+                <dep id="com.distriqt.extension.application:Accessibility" type="s"/>
+                <dep id="com.distriqt.extension.application:ApplicationDisplayModes" type="e"/>
+                <dep id="com.distriqt.extension.application:AuthorisationStatus" type="e"/>
+                <dep id="com.distriqt.extension.application:Const" type="e"/>
+                <dep id="com.distriqt.extension.application:Defaults" type="s"/>
+                <dep id="com.distriqt.extension.application:Device" type="s"/>
+                <dep id="com.distriqt.extension.application:Keychain" type="s"/>
+                <dep id="com.distriqt.extension.application:Settings" type="s"/>
+                <dep id="com.distriqt.extension.application:_Accessibility" type="e"/>
+                <dep id="com.distriqt.extension.application:_AlarmManagerImpl" type="e"/>
+                <dep id="com.distriqt.extension.application:_DefaultsImpl" type="e"/>
+                <dep id="com.distriqt.extension.application:_DeviceImpl" type="e"/>
+                <dep id="com.distriqt.extension.application:_DisplayImpl" type="e"/>
+                <dep id="com.distriqt.extension.application:_KeychainImpl" type="e"/>
+                <dep id="com.distriqt.extension.application:_SettingsImpl" type="e"/>
+                <dep id="com.distriqt.extension.application:_SoftKeyboardImpl" type="e"/>
+                <dep id="com.distriqt.extension.application.alarms:AlarmManager" type="s"/>
+                <dep id="com.distriqt.extension.application.display:Display" type="s"/>
+                <dep id="com.distriqt.extension.application.events:ApplicationEvent" type="e"/>
+                <dep id="com.distriqt.extension.application.events:ApplicationStateEvent" type="e"/>
+                <dep id="com.distriqt.extension.application.events:AuthorisationEvent" type="e"/>
+                <dep id="com.distriqt.extension.application.keyboard:SoftKeyboard" type="s"/>
+                <dep id="flash.display:BitmapData" type="s"/>
+                <dep id="flash.display:Stage" type="s"/>
+                <dep id="flash.events:ErrorEvent" type="e"/>
+                <dep id="flash.events:EventDispatcher" type="i"/>
+                <dep id="flash.events:StatusEvent" type="e"/>
+                <dep id="flash.external:ExtensionContext" type="s"/>
+                <dep id="int" type="s"/>
+                <dep id="trace" type="e"/>
+                <dep id="uint" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/ApplicationDisplayModes" mod="1721783980912">
+                <def id="com.distriqt.extension.application:ApplicationDisplayModes"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+                <dep id="com.distriqt.extension.application.display:DisplayMode" type="e"/>
+            </script>
+            <script name="com/distriqt/extension/application/AuthorisationStatus" mod="1721783980912">
+                <def id="com.distriqt.extension.application:AuthorisationStatus"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/Const" mod="1733889672542">
+                <def id="com.distriqt.extension.application:Const"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/Defaults" mod="1721783980912">
+                <def id="com.distriqt.extension.application:Defaults"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Number" type="s"/>
+                <dep id="Object" type="s"/>
+                <dep id="String" type="s"/>
+                <dep id="flash.events:IEventDispatcher" type="i"/>
+                <dep id="int" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/Device" mod="1721783980913">
+                <def id="com.distriqt.extension.application:Device"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Function" type="s"/>
+                <dep id="String" type="s"/>
+                <dep id="com.distriqt.extension.application:DisplayMetrics" type="s"/>
+                <dep id="com.distriqt.extension.application:IDType" type="e"/>
+                <dep id="com.distriqt.extension.application:Locale" type="s"/>
+                <dep id="com.distriqt.extension.application:OperatingSystem" type="s"/>
+                <dep id="com.distriqt.extension.application:TimeZone" type="s"/>
+                <dep id="flash.events:IEventDispatcher" type="i"/>
+                <dep id="int" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/DeviceOrientation" mod="1721783980913">
+                <def id="com.distriqt.extension.application:DeviceOrientation"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/DisplayMetrics" mod="1721783980913">
+                <def id="com.distriqt.extension.application:DisplayMetrics"/>
+                <dep id="Number" type="s"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+                <dep id="int" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/IDType" mod="1721783980913">
+                <def id="com.distriqt.extension.application:IDType"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/IOSStatusBarStyles" mod="1721783980913">
+                <def id="com.distriqt.extension.application:IOSStatusBarStyles"/>
+                <dep id="Object" type="i"/>
+                <dep id="uint" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/Keychain" mod="1721783980913">
+                <def id="com.distriqt.extension.application:Keychain"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+                <dep id="int" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/Locale" mod="1721783980913">
+                <def id="com.distriqt.extension.application:Locale"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/ObjectUtils" mod="1721783980913">
+                <def id="com.distriqt.extension.application:ObjectUtils"/>
+                <dep id="Array" type="e"/>
+                <dep id="Error" type="e"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="e"/>
+                <dep id="flash.utils:getQualifiedClassName" type="e"/>
+            </script>
+            <script name="com/distriqt/extension/application/OperatingSystem" mod="1721783980913">
+                <def id="com.distriqt.extension.application:OperatingSystem"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+                <dep id="int" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/Settings" mod="1721783980913">
+                <def id="com.distriqt.extension.application:Settings"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Number" type="s"/>
+                <dep id="String" type="s"/>
+                <dep id="flash.events:IEventDispatcher" type="i"/>
+                <dep id="int" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/StatusBarStyle" mod="1721783980913">
+                <def id="com.distriqt.extension.application:StatusBarStyle"/>
+                <dep id="Object" type="i"/>
+                <dep id="uint" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/TimeZone" mod="1721783980913">
+                <def id="com.distriqt.extension.application:TimeZone"/>
+                <dep id="Number" type="s"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/_Accessibility" mod="1721783980913">
+                <def id="com.distriqt.extension.application:_Accessibility"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Error" type="e"/>
+                <dep id="com.distriqt.extension.application:Accessibility" type="i"/>
+                <dep id="flash.events:EventDispatcher" type="i"/>
+                <dep id="flash.external:ExtensionContext" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/_AlarmManagerImpl" mod="1721783980913">
+                <def id="com.distriqt.extension.application:_AlarmManagerImpl"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Error" type="e"/>
+                <dep id="Function" type="s"/>
+                <dep id="JSON" type="e"/>
+                <dep id="Object" type="e"/>
+                <dep id="com.distriqt.extension.application.alarms:Alarm" type="s"/>
+                <dep id="com.distriqt.extension.application.alarms:AlarmManager" type="i"/>
+                <dep id="com.distriqt.extension.application.events:AlarmEvent" type="e"/>
+                <dep id="flash.events:EventDispatcher" type="i"/>
+                <dep id="flash.events:StatusEvent" type="e"/>
+                <dep id="flash.external:ExtensionContext" type="s"/>
+                <dep id="int" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/_DefaultsImpl" mod="1721783980914">
+                <def id="com.distriqt.extension.application:_DefaultsImpl"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Error" type="e"/>
+                <dep id="Function" type="s"/>
+                <dep id="JSON" type="e"/>
+                <dep id="Number" type="s"/>
+                <dep id="Object" type="s"/>
+                <dep id="String" type="s"/>
+                <dep id="com.distriqt.extension.application:Defaults" type="i"/>
+                <dep id="com.distriqt.extension.application.events:DefaultsEvent" type="e"/>
+                <dep id="flash.events:EventDispatcher" type="i"/>
+                <dep id="flash.events:StatusEvent" type="e"/>
+                <dep id="flash.external:ExtensionContext" type="s"/>
+                <dep id="int" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/_DeviceImpl" mod="1721783980914">
+                <def id="com.distriqt.extension.application:_DeviceImpl"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Error" type="e"/>
+                <dep id="Function" type="s"/>
+                <dep id="JSON" type="e"/>
+                <dep id="Object" type="s"/>
+                <dep id="String" type="s"/>
+                <dep id="com.distriqt.extension.application:Device" type="i"/>
+                <dep id="com.distriqt.extension.application:DeviceOrientation" type="e"/>
+                <dep id="com.distriqt.extension.application:DisplayMetrics" type="s"/>
+                <dep id="com.distriqt.extension.application:IDType" type="e"/>
+                <dep id="com.distriqt.extension.application:Locale" type="s"/>
+                <dep id="com.distriqt.extension.application:OperatingSystem" type="s"/>
+                <dep id="com.distriqt.extension.application:TimeZone" type="s"/>
+                <dep id="com.distriqt.extension.application:_DisplayMetricsImpl" type="s"/>
+                <dep id="com.distriqt.extension.application:_UUID" type="e"/>
+                <dep id="com.distriqt.extension.application.events:DeviceOrientationEvent" type="e"/>
+                <dep id="com.distriqt.extension.application.events:DeviceStateEvent" type="e"/>
+                <dep id="flash.events:EventDispatcher" type="i"/>
+                <dep id="flash.events:StatusEvent" type="e"/>
+                <dep id="flash.external:ExtensionContext" type="s"/>
+                <dep id="flash.filesystem:File" type="e"/>
+                <dep id="int" type="s"/>
+                <dep id="trace" type="e"/>
+            </script>
+            <script name="com/distriqt/extension/application/_DisplayImpl" mod="1721783980914">
+                <def id="com.distriqt.extension.application:_DisplayImpl"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Error" type="e"/>
+                <dep id="Function" type="s"/>
+                <dep id="JSON" type="e"/>
+                <dep id="Number" type="s"/>
+                <dep id="Object" type="e"/>
+                <dep id="String" type="s"/>
+                <dep id="com.distriqt.extension.application:Application" type="e"/>
+                <dep id="com.distriqt.extension.application:DisplayMetrics" type="s"/>
+                <dep id="com.distriqt.extension.application:_DisplayMetricsImpl" type="s"/>
+                <dep id="com.distriqt.extension.application.display:Display" type="i"/>
+                <dep id="com.distriqt.extension.application.display:DisplayCutout" type="s"/>
+                <dep id="com.distriqt.extension.application.display:DisplayMode" type="e"/>
+                <dep id="com.distriqt.extension.application.display:LayoutMode" type="e"/>
+                <dep id="com.distriqt.extension.application.display:UserInterfaceStyle" type="e"/>
+                <dep id="flash.display:Stage" type="s"/>
+                <dep id="flash.display:StageDisplayState" type="e"/>
+                <dep id="flash.events:EventDispatcher" type="i"/>
+                <dep id="flash.events:StatusEvent" type="e"/>
+                <dep id="flash.external:ExtensionContext" type="s"/>
+                <dep id="int" type="s"/>
+                <dep id="trace" type="e"/>
+                <dep id="uint" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/_DisplayMetricsImpl" mod="1721783980914">
+                <def id="com.distriqt.extension.application:_DisplayMetricsImpl"/>
+                <dep id="Error" type="e"/>
+                <dep id="Number" type="s"/>
+                <dep id="Object" type="s"/>
+                <dep id="String" type="s"/>
+                <dep id="com.distriqt.extension.application:DisplayMetrics" type="i"/>
+                <dep id="flash.events:EventDispatcher" type="i"/>
+                <dep id="flash.external:ExtensionContext" type="s"/>
+                <dep id="int" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/_KeychainImpl" mod="1721783980914">
+                <def id="com.distriqt.extension.application:_KeychainImpl"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Error" type="e"/>
+                <dep id="String" type="s"/>
+                <dep id="com.distriqt.extension.application:Keychain" type="i"/>
+                <dep id="flash.events:EventDispatcher" type="i"/>
+                <dep id="flash.external:ExtensionContext" type="s"/>
+                <dep id="int" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/_SettingsImpl" mod="1721783980914">
+                <def id="com.distriqt.extension.application:_SettingsImpl"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Error" type="e"/>
+                <dep id="Function" type="s"/>
+                <dep id="JSON" type="e"/>
+                <dep id="Number" type="s"/>
+                <dep id="Object" type="e"/>
+                <dep id="String" type="s"/>
+                <dep id="com.distriqt.extension.application:Settings" type="i"/>
+                <dep id="com.distriqt.extension.application.events:SettingsEvent" type="e"/>
+                <dep id="flash.events:EventDispatcher" type="i"/>
+                <dep id="flash.events:StatusEvent" type="e"/>
+                <dep id="flash.external:ExtensionContext" type="s"/>
+                <dep id="int" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/_SoftKeyboardImpl" mod="1721783980914">
+                <def id="com.distriqt.extension.application:_SoftKeyboardImpl"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Error" type="e"/>
+                <dep id="Function" type="s"/>
+                <dep id="String" type="s"/>
+                <dep id="com.distriqt.extension.application.keyboard:SoftKeyboard" type="i"/>
+                <dep id="flash.display:Stage" type="s"/>
+                <dep id="flash.events:EventDispatcher" type="i"/>
+                <dep id="flash.events:SoftKeyboardEvent" type="e"/>
+                <dep id="flash.events:StatusEvent" type="e"/>
+                <dep id="flash.external:ExtensionContext" type="s"/>
+                <dep id="flash.geom:Rectangle" type="s"/>
+                <dep id="int" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/_UUID" mod="1721783980914">
+                <def id="com.distriqt.extension.application:_UUID"/>
+                <dep id="Function" type="e"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+                <dep id="flash.crypto:generateRandomBytes" type="e"/>
+                <dep id="flash.utils:ByteArray" type="e"/>
+                <dep id="uint" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/alarms/Alarm" mod="1721783980914">
+                <def id="com.distriqt.extension.application.alarms:Alarm"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Number" type="s"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+                <dep id="int" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/alarms/AlarmBuilder" mod="1721783980914">
+                <def id="com.distriqt.extension.application.alarms:AlarmBuilder"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Date" type="s"/>
+                <dep id="Error" type="e"/>
+                <dep id="Number" type="s"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+                <dep id="com.distriqt.extension.application.alarms:Alarm" type="s"/>
+                <dep id="int" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/alarms/AlarmManager" mod="1721783980914">
+                <def id="com.distriqt.extension.application.alarms:AlarmManager"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="com.distriqt.extension.application.alarms:Alarm" type="s"/>
+                <dep id="flash.events:IEventDispatcher" type="i"/>
+                <dep id="int" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/display/AndroidSystemUiFlags" mod="1721783980915">
+                <def id="com.distriqt.extension.application.display:AndroidSystemUiFlags"/>
+                <dep id="Object" type="i"/>
+                <dep id="int" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/display/Display" mod="1721783980915">
+                <def id="com.distriqt.extension.application.display:Display"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Number" type="s"/>
+                <dep id="String" type="s"/>
+                <dep id="com.distriqt.extension.application:DisplayMetrics" type="s"/>
+                <dep id="com.distriqt.extension.application.display:DisplayCutout" type="s"/>
+                <dep id="com.distriqt.extension.application.display:LayoutMode" type="e"/>
+                <dep id="flash.events:IEventDispatcher" type="i"/>
+                <dep id="int" type="s"/>
+                <dep id="uint" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/display/DisplayCutout" mod="1721783980915">
+                <def id="com.distriqt.extension.application.display:DisplayCutout"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+                <dep id="__AS3__.vec:Vector" type="s"/>
+                <dep id="flash.geom:Rectangle" type="s"/>
+                <dep id="int" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/display/DisplayMode" mod="1721783980915">
+                <def id="com.distriqt.extension.application.display:DisplayMode"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/display/LayoutMode" mod="1721783980915">
+                <def id="com.distriqt.extension.application.display:LayoutMode"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/display/NavigationBarStyle" mod="1721783980915">
+                <def id="com.distriqt.extension.application.display:NavigationBarStyle"/>
+                <dep id="Object" type="i"/>
+                <dep id="int" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/display/UserInterfaceStyle" mod="1721783980915">
+                <def id="com.distriqt.extension.application.display:UserInterfaceStyle"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/events/AlarmEvent" mod="1721783980915">
+                <def id="com.distriqt.extension.application.events:AlarmEvent"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="String" type="s"/>
+                <dep id="flash.events:Event" type="i"/>
+                <dep id="int" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/events/ApplicationEvent" mod="1721783980915">
+                <def id="com.distriqt.extension.application.events:ApplicationEvent"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="String" type="s"/>
+                <dep id="flash.events:Event" type="i"/>
+            </script>
+            <script name="com/distriqt/extension/application/events/ApplicationStateEvent" mod="1721783980915">
+                <def id="com.distriqt.extension.application.events:ApplicationStateEvent"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="String" type="s"/>
+                <dep id="flash.events:Event" type="i"/>
+            </script>
+            <script name="com/distriqt/extension/application/events/AuthorisationEvent" mod="1721783980915">
+                <def id="com.distriqt.extension.application.events:AuthorisationEvent"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="String" type="s"/>
+                <dep id="com.distriqt.extension.application:AuthorisationStatus" type="e"/>
+                <dep id="flash.events:Event" type="i"/>
+            </script>
+            <script name="com/distriqt/extension/application/events/DefaultsEvent" mod="1721783980915">
+                <def id="com.distriqt.extension.application.events:DefaultsEvent"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="String" type="s"/>
+                <dep id="flash.events:Event" type="i"/>
+            </script>
+            <script name="com/distriqt/extension/application/events/DeviceOrientationEvent" mod="1721783980916">
+                <def id="com.distriqt.extension.application.events:DeviceOrientationEvent"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="String" type="s"/>
+                <dep id="com.distriqt.extension.application:DeviceOrientation" type="e"/>
+                <dep id="flash.events:Event" type="i"/>
+            </script>
+            <script name="com/distriqt/extension/application/events/DeviceStateEvent" mod="1721783980916">
+                <def id="com.distriqt.extension.application.events:DeviceStateEvent"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="String" type="s"/>
+                <dep id="flash.events:Event" type="i"/>
+            </script>
+            <script name="com/distriqt/extension/application/events/SettingsEvent" mod="1721783980916">
+                <def id="com.distriqt.extension.application.events:SettingsEvent"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="String" type="s"/>
+                <dep id="flash.events:Event" type="i"/>
+            </script>
+            <script name="com/distriqt/extension/application/keyboard/SoftKeyboard" mod="1721783980916">
+                <def id="com.distriqt.extension.application.keyboard:SoftKeyboard"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="String" type="s"/>
+                <dep id="flash.events:IEventDispatcher" type="i"/>
+                <dep id="flash.geom:Rectangle" type="s"/>
+                <dep id="int" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/application/keyboard/SoftKeyboardMode" mod="1721783980916">
+                <def id="com.distriqt.extension.application.keyboard:SoftKeyboardMode"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+            </script>
+            <digests>
+                <digest type="SHA-256" signed="false" value="46078087b371a0cc8dfd2f2c85f4201de98e5e55df009c227772fdd5bc2757ec"/>
+            </digests>
+        </library>
+    </libraries>
+</swc>

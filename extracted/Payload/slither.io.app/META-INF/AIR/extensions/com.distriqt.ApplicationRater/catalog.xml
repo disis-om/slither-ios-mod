@@ -1,0 +1,89 @@
+<?xml version="1.0" ?>
+<swc xmlns="http://www.adobe.com/flash/swccatalog/9">
+    <versions>
+        <swc version="1.2"/>
+        <compiler name="ActionScript Compiler" version="3.2.0" build="0"/>
+    </versions>
+    <features>
+        <feature-script-deps/>
+    </features>
+    <libraries>
+        <library path="library.swf">
+            <script name="com/distriqt/extension/applicationrater/ApplicationRater" mod="1684393780124">
+                <def id="com.distriqt.extension.applicationrater:ApplicationRater"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Date" type="s"/>
+                <dep id="Error" type="e"/>
+                <dep id="Function" type="s"/>
+                <dep id="JSON" type="e"/>
+                <dep id="Number" type="e"/>
+                <dep id="Object" type="e"/>
+                <dep id="String" type="s"/>
+                <dep id="com.distriqt.extension.applicationrater:ApplicationRaterTheme" type="e"/>
+                <dep id="com.distriqt.extension.applicationrater:Const" type="e"/>
+                <dep id="com.distriqt.extension.applicationrater:Review" type="s"/>
+                <dep id="com.distriqt.extension.applicationrater:_Review" type="e"/>
+                <dep id="com.distriqt.extension.applicationrater.events:ApplicationIDEvent" type="e"/>
+                <dep id="com.distriqt.extension.applicationrater.events:ApplicationRaterEvent" type="e"/>
+                <dep id="flash.desktop:NativeApplication" type="e"/>
+                <dep id="flash.events:EventDispatcher" type="i"/>
+                <dep id="flash.events:StatusEvent" type="e"/>
+                <dep id="flash.external:ExtensionContext" type="s"/>
+                <dep id="flash.filesystem:File" type="e"/>
+                <dep id="flash.filesystem:FileMode" type="e"/>
+                <dep id="flash.filesystem:FileStream" type="e"/>
+                <dep id="int" type="s"/>
+                <dep id="trace" type="e"/>
+            </script>
+            <script name="com/distriqt/extension/applicationrater/ApplicationRaterTheme" mod="1673398212380">
+                <def id="com.distriqt.extension.applicationrater:ApplicationRaterTheme"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/applicationrater/Const" mod="1733890925853">
+                <def id="com.distriqt.extension.applicationrater:Const"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/applicationrater/Review" mod="1684393780129">
+                <def id="com.distriqt.extension.applicationrater:Review"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="flash.events:IEventDispatcher" type="i"/>
+            </script>
+            <script name="com/distriqt/extension/applicationrater/_Review" mod="1684393780113">
+                <def id="com.distriqt.extension.applicationrater:_Review"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Error" type="e"/>
+                <dep id="Function" type="s"/>
+                <dep id="String" type="s"/>
+                <dep id="com.distriqt.extension.applicationrater:Review" type="i"/>
+                <dep id="com.distriqt.extension.applicationrater.events:ReviewEvent" type="e"/>
+                <dep id="flash.events:EventDispatcher" type="i"/>
+                <dep id="flash.events:StatusEvent" type="s"/>
+                <dep id="flash.external:ExtensionContext" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/applicationrater/events/ApplicationIDEvent" mod="1684393780113">
+                <def id="com.distriqt.extension.applicationrater.events:ApplicationIDEvent"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="String" type="s"/>
+                <dep id="flash.events:Event" type="i"/>
+                <dep id="int" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/applicationrater/events/ApplicationRaterEvent" mod="1684393780113">
+                <def id="com.distriqt.extension.applicationrater.events:ApplicationRaterEvent"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="String" type="s"/>
+                <dep id="flash.events:Event" type="i"/>
+            </script>
+            <script name="com/distriqt/extension/applicationrater/events/ReviewEvent" mod="1684393780116">
+                <def id="com.distriqt.extension.applicationrater.events:ReviewEvent"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="String" type="s"/>
+                <dep id="flash.events:Event" type="i"/>
+            </script>
+            <digests>
+                <digest type="SHA-256" signed="false" value="1ec7201595da7772971be9e5d63e247f0f45c2fb101346730d6afcc26e8875c0"/>
+            </digests>
+        </library>
+    </libraries>
+</swc>

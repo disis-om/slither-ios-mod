@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<application xmlns="http://ns.adobe.com/air/application/51.1">
+    <id>com.hypah.io.slither</id>
+    <versionNumber>2.1.2</versionNumber>
+    <filename>slither.io</filename>
+    <name>slither.io</name>
+    <initialWindow>
+        <content>slither%20ios.swf</content>
+        <systemChrome>none</systemChrome>
+        <transparent>false</transparent>
+        <visible>true</visible>
+        <fullScreen>true</fullScreen>
+        <autoOrients>false</autoOrients>
+        <renderMode>direct</renderMode>
+        <!-- Whether direct mode allocates storage for depth and stencil buffers. Default false -->
+        <depthAndStencil>true</depthAndStencil>
+        <aspectRatio>portrait</aspectRatio>
+    </initialWindow>
+    <icon>
+        <image57x57>app%20icons/ios/ios-icon57.png</image57x57>
+        <image76x76>app%20icons/ios/ios-icon76.png</image76x76>
+        <image120x120>app%20icons/ios/ios-icon120.png</image120x120>
+        <image152x152>app%20icons/ios/ios-icon152.png</image152x152>
+        <image1024x1024>app%20icons/ios/ios-icon1024.png</image1024x1024>
+        <image48x48>app%20icons/ios/ios-icon48.png</image48x48>
+        <image144x144>app%20icons/ios/ios-icon144.png</image144x144>
+        <image512x512>app%20icons/ios/ios-icon512.png</image512x512>
+        <image29x29>app%20icons/ios/ios-icon29.png</image29x29>
+        <image114x114>app%20icons/ios/ios-icon114.png</image114x114>
+        <image50x50>app%20icons/ios/ios-icon50.png</image50x50>
+        <image58x58>app%20icons/ios/ios-icon58.png</image58x58>
+        <image100x100>app%20icons/ios/ios-icon100.png</image100x100>
+        <image40x40>app%20icons/ios/ios-icon40.png</image40x40>
+        <image80x80>app%20icons/ios/ios-icon80.png</image80x80>
+        <image180x180>app%20icons/ios/ios-icon180.png</image180x180>
+        <image60x60>app%20icons/ios/ios-icon60.png</image60x60>
+        <image75x75>app%20icons/ios/ios-icon75.png</image75x75>
+        <image87x87>app%20icons/ios/ios-icon87.png</image87x87>
+        <image167x167>app%20icons/ios/ios-icon167.png</image167x167>
+    </icon>
+    <iPhone>
+        <requestedDisplayResolution>high</requestedDisplayResolution>
+        <InfoAdditions><![CDATA[
+<key>MinimumOSVersion</key>
+<string>12.0</string>
+<key>GADApplicationIdentifier</key>
+<string>ca-app-pub-0051214680937399~8695743910</string>
+<key>NSAppTransportSecurity</key>
+<dict>
+  <key>NSAllowsArbitraryLoads</key>
+  <true/>
+  <key>NSAllowsArbitraryLoadsForMedia</key>
+  <true/>
+  <key>NSAllowsArbitraryLoadsInWebContent</key>
+  <true/>
+</dict>
+<key>SKAdNetworkItems</key>
+<array>
+  <dict>
+    <key>SKAdNetworkIdentifier</key>
+    <string>cstr6suwn9.skadnetwork</string>
+  </dict>
+</array><key>UIDeviceFamily</key><array><string>1</string><string>2</string></array>]]></InfoAdditions>
+        <Entitlements></Entitlements>
+    </iPhone>
+    <versionLabel></versionLabel>
+    <extensions>
+        <extensionID>com.distriqt.Core</extensionID>
+        <extensionID>com.distriqt.InAppBilling</extensionID>
+        <extensionID>com.distriqt.ApplicationRater</extensionID>
+        <extensionID>com.distriqt.Application</extensionID>
+    </extensions>
+</application>

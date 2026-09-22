@@ -1,0 +1,13 @@
+# Build output - rebuild with Scripts/repack-ipa.ps1 or the CI workflow.
+dist/
+
+# Regenerate with Scripts/export-assets.ps1; 35 MB of PNGs that nothing reads
+# at runtime, so they stay out of the repo.
+assets/
+
+# The input IPA this tree was unpacked from. Keep it locally, not in git.
+*.ipa
+
+# Local scratch
+work/
+*.log

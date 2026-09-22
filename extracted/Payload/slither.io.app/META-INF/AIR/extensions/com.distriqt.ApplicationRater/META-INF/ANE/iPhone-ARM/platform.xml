@@ -1,0 +1,11 @@
+<platform xmlns="http://ns.adobe.com/air/extension/33.1">
+	<copyright>2024 // distriqt</copyright>
+	<sdkVersion>12.0</sdkVersion>
+	<linkerOptions>
+		<option>-w</option>
+		<option>-framework StoreKit</option>
+	</linkerOptions>
+	<packagedDependencies>
+
+	</packagedDependencies>
+</platform>

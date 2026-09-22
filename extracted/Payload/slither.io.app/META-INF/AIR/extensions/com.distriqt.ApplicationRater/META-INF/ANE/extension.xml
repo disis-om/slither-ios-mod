@@ -1,0 +1,70 @@
+<extension xmlns="http://ns.adobe.com/air/extension/33.1">
+	<id>com.distriqt.ApplicationRater</id>
+	<versionNumber>7.0.0</versionNumber>
+	<platforms>
+
+		<platform name="Android-ARM">
+			<applicationDeployment>
+				<nativeLibrary>com.distriqt.applicationrater.android.jar</nativeLibrary>
+				<initializer>com.distriqt.extension.applicationrater.ApplicationRaterExtension</initializer>
+				<finalizer>com.distriqt.extension.applicationrater.ApplicationRaterExtension</finalizer>
+			</applicationDeployment>
+		</platform>
+		<platform name="Android-ARM64">
+			<applicationDeployment>
+				<nativeLibrary>com.distriqt.applicationrater.android.jar</nativeLibrary>
+				<initializer>com.distriqt.extension.applicationrater.ApplicationRaterExtension</initializer>
+				<finalizer>com.distriqt.extension.applicationrater.ApplicationRaterExtension</finalizer>
+			</applicationDeployment>
+		</platform>
+		<platform name="Android-x86">
+			<applicationDeployment>
+				<nativeLibrary>com.distriqt.applicationrater.android.jar</nativeLibrary>
+				<initializer>com.distriqt.extension.applicationrater.ApplicationRaterExtension</initializer>
+				<finalizer>com.distriqt.extension.applicationrater.ApplicationRaterExtension</finalizer>
+			</applicationDeployment>
+		</platform>
+		<platform name="Android-x64">
+			<applicationDeployment>
+				<nativeLibrary>com.distriqt.applicationrater.android.jar</nativeLibrary>
+				<initializer>com.distriqt.extension.applicationrater.ApplicationRaterExtension</initializer>
+				<finalizer>com.distriqt.extension.applicationrater.ApplicationRaterExtension</finalizer>
+			</applicationDeployment>
+		</platform>
+
+		<platform name="iPhone-ARM">
+			<applicationDeployment>
+				<nativeLibrary>libApplicationRater.a</nativeLibrary>
+				<initializer>ApplicationRaterExtInitializer</initializer>
+				<finalizer>ApplicationRaterExtFinalizer</finalizer>
+			</applicationDeployment>
+		</platform>
+		<platform name="iPhone-x86">
+			<applicationDeployment>
+				<nativeLibrary>libApplicationRater.a</nativeLibrary>
+				<initializer>ApplicationRaterExtInitializer</initializer>
+				<finalizer>ApplicationRaterExtFinalizer</finalizer>
+			</applicationDeployment>
+		</platform>
+		<platform name="appleTV-ARM">
+			<applicationDeployment>
+				<nativeLibrary>libApplicationRater.a</nativeLibrary>
+				<initializer>ApplicationRaterExtInitializer</initializer>
+				<finalizer>ApplicationRaterExtFinalizer</finalizer>
+			</applicationDeployment>
+		</platform>
+
+		<platform name="MacOS-x86-64">
+			<applicationDeployment>
+				<nativeLibrary>ApplicationRater.framework</nativeLibrary>
+				<initializer>ApplicationRaterExtInitializer</initializer>
+				<finalizer>ApplicationRaterExtFinalizer</finalizer>
+			</applicationDeployment>
+		</platform>
+		
+		<platform name="default"> 
+			<applicationDeployment /> 
+		</platform>
+		
+	</platforms>
+</extension>

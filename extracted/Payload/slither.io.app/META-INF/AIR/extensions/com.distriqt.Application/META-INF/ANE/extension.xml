@@ -1,0 +1,70 @@
+<extension xmlns="http://ns.adobe.com/air/extension/50.2">
+	<id>com.distriqt.Application</id>
+	<versionNumber>8.0.0</versionNumber>
+	<platforms>
+
+		<platform name="Android-ARM">
+			<applicationDeployment>
+				<nativeLibrary>com.distriqt.application.android.jar</nativeLibrary>
+				<initializer>com.distriqt.extension.application.ApplicationExtension</initializer>
+				<finalizer>com.distriqt.extension.application.ApplicationExtension</finalizer>
+			</applicationDeployment>
+		</platform>
+		<platform name="Android-ARM64">
+			<applicationDeployment>
+				<nativeLibrary>com.distriqt.application.android.jar</nativeLibrary>
+				<initializer>com.distriqt.extension.application.ApplicationExtension</initializer>
+				<finalizer>com.distriqt.extension.application.ApplicationExtension</finalizer>
+			</applicationDeployment>
+		</platform>
+		<platform name="Android-x86">
+			<applicationDeployment>
+				<nativeLibrary>com.distriqt.application.android.jar</nativeLibrary>
+				<initializer>com.distriqt.extension.application.ApplicationExtension</initializer>
+				<finalizer>com.distriqt.extension.application.ApplicationExtension</finalizer>
+			</applicationDeployment>
+		</platform>
+		<platform name="Android-x64">
+			<applicationDeployment>
+				<nativeLibrary>com.distriqt.application.android.jar</nativeLibrary>
+				<initializer>com.distriqt.extension.application.ApplicationExtension</initializer>
+				<finalizer>com.distriqt.extension.application.ApplicationExtension</finalizer>
+			</applicationDeployment>
+		</platform>
+
+		<platform name="iPhone-ARM">
+			<applicationDeployment>
+				<nativeLibrary>libApplication.a</nativeLibrary>
+				<initializer>ApplicationExtInitializer</initializer>
+				<finalizer>ApplicationExtFinalizer</finalizer>
+			</applicationDeployment>
+		</platform>
+		<platform name="iPhone-x86">
+			<applicationDeployment>
+				<nativeLibrary>libApplication.a</nativeLibrary>
+				<initializer>ApplicationExtInitializer</initializer>
+				<finalizer>ApplicationExtFinalizer</finalizer>
+			</applicationDeployment>
+		</platform>
+		<platform name="appleTV-ARM">
+			<applicationDeployment>
+				<nativeLibrary>libApplication.a</nativeLibrary>
+				<initializer>ApplicationExtInitializer</initializer>
+				<finalizer>ApplicationExtFinalizer</finalizer>
+			</applicationDeployment>
+		</platform>
+
+		<!-- <platform name="Windows-x86">
+			<applicationDeployment>
+				<nativeLibrary>Application.dll</nativeLibrary>
+				<initializer>ApplicationExtInitializer</initializer>
+				<finalizer>ApplicationExtFinalizer</finalizer>
+			</applicationDeployment>
+		</platform> -->
+
+		<platform name="default"> 
+			<applicationDeployment /> 
+		</platform>
+		
+	</platforms>
+</extension>

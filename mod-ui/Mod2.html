@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zoom</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: rotate(90deg) translate(0,50px);
+            user-select: none;
+        }
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 45px; 
+        }
+        .btn {
+            width: 120px;
+            height: 40px;
+            background-color: #007bff55;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #status {
+            margin-top: 10px;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            color: #ffffffaa;
+            text-align: center;
+            min-height: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="button-container">
+    <button class ="btn" onclick ="plus()">+</button>
+    <button class="btn" onclick ="minus()">-</button>
+    <div id="status"></div>
+</div>
+<script>
+// Place the window first. The original script did this last, so a failed
+// memory scan left the panel unpositioned on top of everything else.
+setWindowRect(150, 650, 250, 130);
+setWindowDrag(0, 0, 400, 400);
+
+var ZOOM_OFFSET = 0x378;   // zoom field sits this far below the anchor
+var ANCHOR      = '31337'; // F64 sentinel that only exists while in a match
+
+var baseAddress = null;
+var plusLocker  = null;
+var minusLocker = null;
+
+function status(text) {
+    var el = document.getElementById('status');
+    if (el) el.textContent = text || '';
+}
+
+// Re-runs the scan on demand instead of once at load, and returns null rather
+// than throwing when the anchor is not in memory yet.
+function resolveBase(force) {
+    if (baseAddress && !force) return baseAddress;
+    if (typeof h5gg === 'undefined') return null;
+    try {
+        h5gg.clearResults();
+        h5gg.searchNumber(ANCHOR, 'F64', '0x270000000', '0x7100000000');
+        if (h5gg.getResultsCount() < 1) return null;
+        var results = h5gg.getResults(1, 0);
+        if (!results || !results.length || !results[0]) return null;
+        baseAddress = results[0].address;
+        return baseAddress;
+    } catch (e) {
+        return null;
+    }
+}
+
+function zoomAddress() {
+    var base = resolveBase(false);
+    if (base === null) return null;
+    return '0x' + (parseInt(base, 16) - ZOOM_OFFSET).toString(16);
+}
+
+function applyZoom(factor, which) {
+    if (plusLocker)  { clearInterval(plusLocker);  plusLocker  = null; }
+    if (minusLocker) { clearInterval(minusLocker); minusLocker = null; }
+
+    var addr = zoomAddress();
+    if (addr === null) {
+        // The anchor moves when a match starts or ends, so drop the cached
+        // address and try once more before giving up.
+        baseAddress = null;
+        if (resolveBase(true) !== null) addr = zoomAddress();
+    }
+    if (addr === null) {
+        status('Join a game first');
+        return;
+    }
+
+    var current = Number(h5gg.getValue(addr, 'F64'));
+    var zoom = current * factor;
+    if (!isFinite(zoom) || zoom === 0) {
+        status('Zoom value unavailable');
+        return;
+    }
+
+    var locker = setInterval(function() {
+        h5gg.setValue(addr, zoom.toString(), 'F64');
+    }, 1);
+    if (which === 'plus') plusLocker = locker; else minusLocker = locker;
+    status('Zoom ' + zoom.toFixed(2));
+}
+
+function plus() {
+    try { applyZoom(1.25, 'plus'); }
+    catch (e) { status('Zoom failed'); }
+}
+
+function minus() {
+    try { applyZoom(0.8, 'minus'); }
+    catch (e) { status('Zoom failed'); }
+}
+
+// Warm the address up so the first tap is instant when already in a match.
+// A failure here is expected on the menu screen and must stay silent.
+if (resolveBase(false) === null) status('Join a game first');
+</script>
+</body>
+</html>

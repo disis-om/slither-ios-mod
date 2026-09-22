@@ -1,0 +1,15 @@
+<platform xmlns="http://ns.adobe.com/air/extension/33.1">
+	<copyright>2023 // distriqt</copyright>
+	<sdkVersion>11.0</sdkVersion>
+	<linkerOptions>
+		<option>-w</option>
+		<option>-weak_framework UserNotifications</option>
+		<option>-ObjC</option>
+		<option>-lclang_rt.ios</option>	
+	</linkerOptions>
+	
+	<packagedDependencies>
+		<packagedDependency>CoreNativeExtension.framework</packagedDependency>
+	</packagedDependencies>
+	
+</platform>

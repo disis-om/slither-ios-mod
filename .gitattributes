@@ -1,0 +1,19 @@
+# The app bundle must round-trip byte for byte. Never let git normalise line
+# endings, diff, or otherwise touch anything inside it.
+extracted/** -text -diff
+
+*.swf   -text -diff
+*.dylib -text -diff
+*.ipa   -text -diff
+*.car   -text -diff
+*.png   -text -diff
+*.jpg   -text -diff
+*.ttf   -text -diff
+*.nib   -text -diff
+
+# Repo-owned sources keep normal, explicit endings.
+*.ps1  text eol=crlf
+*.py   text eol=lf
+*.md   text eol=lf
+*.yml  text eol=lf
+mod-ui/*.html text eol=lf
