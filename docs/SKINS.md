@@ -65,7 +65,7 @@ measured, not guessed:
 | Verdict | Count | Rule | Action |
 | --- | --- | --- | --- |
 | plain | 140 | normal centre-out falloff, low angular detail | rebuilt on the ramp |
-| patterned | 74 | angular residual > 0.25 - flags, emblems, star beads | byte-identical |
+| patterned | 74 | angular residual > 0.25 - flags, emblems, star beads | artwork kept, black rim added |
 | rim-lit | 41 | outer/inner brightness >= 1.10 - dark centre by design | byte-identical |
 | empty | 10 | no colour to rebuild from | byte-identical |
 
@@ -144,32 +144,31 @@ zxcvbnm,asdfghjklqwertyuiop123456789*0*-**
 
 ### Using it
 
-Open the mod panel, **Skin code** tab.
+Build any skin once in Build a Slither, so the game is in custom-skin mode.
+After that, in the **Skin code** tab: type a code, press **ON**, press Play.
+That is the whole flow.
 
-1. **Find the bytes.** Open Build a Slither. Tap *Snapshot A*, change one bead,
-   tap *Snapshot B*, tap *Compare*. The panel scans a 2 KB window around the
-   anchor and reports which offsets changed. One of them is the skin array.
-2. **Set the offset.** Type it into the offset box and tap *Use*. It is
-   remembered for the session. `-0x1c0` is the starting guess, not a known
-   value - step 1 is what tells you the real one.
-3. **Read or write.** *Read* pulls the current skin out as a code. *Write*
-   pushes a typed code in.
-4. **Press OK in Build a Slither.** The game sends it exactly as if you had
-   tapped every bead by hand.
+**ON** finds the skin array itself. Every byte of a skin is a colour-group
+index, so the array shows up as a long run of small numbers inside a struct
+that is otherwise doubles and pointers - long runs of bytes below 42, carrying
+at least one non-zero value and at least 24 entries. Candidates are tried
+longest first; each one is written and then **read back**, and a region that
+will not hold the bytes is not the skin, so the next candidate gets a turn
+rather than the write failing silently.
 
-The window is scanned as 4-byte words, not 8. An `I64` read lands in a
-JavaScript number, and once the high bytes are large the low ones fall off the
-end of a double - a single changed bead would compare equal and the search
-would silently find nothing. This was caught by `Tests/mod_ui_logic_test.js`,
-which is exactly what that test is for.
+**Read current** pulls the skin the game is holding back out as a code.
+
+If the scan cannot pick the array out, the panel reveals a **Locate** fallback:
+press it, change one bead in Build a Slither, press it again, and it keeps
+whatever byte moved. That path only appears when it is needed.
 
 ### What still needs your phone
 
-The offset, and whether the game needs anything else poked alongside the bytes
-- a length field, or a dirty flag - before its OK picks the skin up. The
-snapshot/compare tool is what answers both: if writing a code changes nothing
-in game, compare snapshots around a manual bead edit again and look for a
-second field moving next to the array.
+Whether the game wants anything poked alongside the bytes - a length field or a
+dirty flag - before Play picks the skin up. Building a skin by hand first puts
+the game in custom-skin mode, which is what that step is for. If a code writes
+successfully and still does not show, Locate around a manual bead edit and look
+for a second field moving next to the array.
 
 ## Testing
 
@@ -185,3 +184,10 @@ node Tests/mod_ui_logic_test.js
 ```
 
 It runs in CI and in `Scripts/repack-ipa.ps1` before anything is packaged.
+
+`Scripts/preview-snake.py` renders overlapping beads from one or more atlases
+so a change can be judged the way it will actually be seen:
+
+```bash
+python Scripts/preview-snake.py skin/segmants-source.png skin/segmants-hq.png --out out.png
+```

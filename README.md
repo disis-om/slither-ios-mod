@@ -32,6 +32,7 @@ What you *can* edit, and what this repo makes editable:
 | `Scripts/repack-ipa.ps1` | Local build: patch → test → unsigned IPA in `dist/` |
 | `Scripts/rebuild-bead-atlas.py` | Rebuilds the bead atlas on slither's own ramp |
 | `Scripts/apply-skin-atlas.py` | Injects `skin/` images into the SWF |
+| `Scripts/preview-snake.py` | Renders overlapping beads, for judging an atlas |
 | `Scripts/export-assets.ps1` | Regenerates `assets/` from the bundle's SWF |
 | `Scripts/check-mod-ui-js.py` | Parses the menu JavaScript with `node --check` |
 | `Scripts/verify-against-source-ipa.py` | Diffs the working bundle against the original IPA |
@@ -74,8 +75,9 @@ gh workflow run pack-ipa.yml -f label=my-edit
   NTL 9.68's renderer. 140 plain beads rebuilt; flags, emblems and rim-lit
   beads left byte-identical. Only that one image changed in the SWF - the
   other 159 are pixel-identical.
-- A **Skin code** tab writes NTL-alphabet skin codes into the same bytes
-  Build a Slither writes, so the game's own OK sends them.
+- A **Skin code** tab: type a code, press ON, press Play. It locates the skin
+  bytes itself and verifies the write by reading it back. Codes use the NTL
+  alphabet, and the game's own Play sends them - the protocol is untouched.
 
 Nothing else moved. `Scripts/verify-against-source-ipa.py` reports exactly two
 modified files - `Mod1.dylib` and `Mod2.dylib` - both still 3,406,784 bytes,

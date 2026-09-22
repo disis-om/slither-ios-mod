@@ -59,6 +59,11 @@ CELL = 64
 ORIGIN = 2
 
 RIM_ALPHA = 0.20        # slither's stop at 0.99 - the whole look lives here
+# slither draws the colour on a black disc that is wider than it is: the disc
+# is 0.7*hb+1 and the bead 0.65*hb, so roughly the outer seventh of what you
+# see is black. That ring is what separates one bead from the next, and
+# leaving it out was why the rebuilt atlas looked no different in motion.
+COLOUR_EXTENT = 0.95   # bead radius as a fraction of the disc radius
 CORE_RADIUS = 0.16      # sample the bead's colour inside this fraction of radius
 
 # A bead is only rebuilt when the ramp actually describes it. Thresholds come
@@ -98,8 +103,11 @@ def geometry() -> tuple[np.ndarray, np.ndarray]:
     radius = np.sqrt(axis[None, :] ** 2 + axis[:, None] ** 2)
 
     # createRadialGradient(0 -> mb) with stops 1.0 at 0 and 0.2 at 0.99 is a
-    # straight line in alpha across the bead.
-    ramp = np.clip(1.0 - (1.0 - RIM_ALPHA) * np.clip(radius, 0.0, 1.0), 0.0, 1.0)
+    # straight line in alpha across the bead; past the bead there is only the
+    # black disc, so the ramp goes to zero and the colour with it.
+    across = np.clip(radius / COLOUR_EXTENT, 0.0, 1.0)
+    ramp = 1.0 - (1.0 - RIM_ALPHA) * across
+    ramp = np.where(radius > COLOUR_EXTENT, 0.0, ramp)
     return radius, ramp
 
 
@@ -156,6 +164,14 @@ def rebuild(cell: np.ndarray, radius: np.ndarray, ramp: np.ndarray
 
     profile = radial_profile(luma, alpha, radius)
     verdict = classify(luma, alpha, radius, profile)
+
+    if verdict == "patterned":
+        # A flag or emblem keeps its artwork - the ramp would erase it - but it
+        # still needs the black rim, or it would be the only bead on the snake
+        # that does not separate from its neighbours.
+        ringed = np.where((radius > COLOUR_EXTENT)[..., None], 0.0, linear)
+        return linear_to_srgb(ringed), verdict
+
     if verdict != "plain":
         return None, verdict
 
@@ -204,7 +220,10 @@ def main() -> int:
             out[y:y + CELL, x:x + CELL, :3] = rebuilt
 
     for name in sorted(verdicts):
-        note = "rebuilt on slither's ramp" if name == "plain" else "left byte-identical"
+        note = {
+            "plain": "rebuilt on slither's ramp",
+            "patterned": "artwork kept, black rim added",
+        }.get(name, "left byte-identical")
         print(f"  {name:<10} {verdicts[name]:>4}  {note}")
 
     result = np.clip(out, 0.0, 1.0)
