@@ -43,6 +43,9 @@ if (-not $SkipChecks) {
     & python (Join-Path $PSScriptRoot 'check-mod-ui-js.py')
     if ($LASTEXITCODE -ne 0) { throw 'mod menu JavaScript does not parse' }
 
+    & node (Join-Path $root 'Tests/mod_ui_logic_test.js')
+    if ($LASTEXITCODE -ne 0) { throw 'mod menu logic test failed' }
+
     & python (Join-Path $PSScriptRoot 'patch-mod-menu.py')
     if ($LASTEXITCODE -ne 0) { throw 'patch-mod-menu.py failed' }
 

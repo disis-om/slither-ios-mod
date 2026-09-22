@@ -12,6 +12,7 @@ on:
     paths:
       - 'extracted/**'
       - 'mod-ui/**'
+      - 'skin/**'
       - 'Scripts/**'
       - 'Tests/**'
       - '.github/workflows/pack-ipa.yml'
@@ -30,6 +31,9 @@ jobs:
 
       - name: Check mod menu JavaScript parses
         run: python3 Scripts/check-mod-ui-js.py
+
+      - name: Run mod menu logic tests
+        run: node Tests/mod_ui_logic_test.js
 
       - name: Apply mod menu pages
         run: python3 Scripts/patch-mod-menu.py

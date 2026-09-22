@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>slither.io Mod</title>
+    <style>
+html, body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    color: #628a41;
+    transform: rotate(45deg) translate(0,50px);
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    justify-content: center;
+    align-items: center;
+}
+        label {
+            display: block;
+            margin: 5px 0;
+        }
+        button {
+            margin-top: 10px;
+        }
+        #tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+        #tabs button {
+            margin-top: 0;
+            flex: 1;
+            padding: 6px 4px;
+            font-size: 13px;
+            border: none;
+            border-radius: 4px;
+            background: #628a4133;
+            color: #628a41;
+        }
+        #tabs button.on {
+            background: #628a4188;
+            color: #dff0c8;
+        }
+        #status {
+            margin-top: 12px;
+            font-size: 12px;
+            color: #628a41aa;
+            min-height: 14px;
+            word-break: break-word;
+        }
+        .row {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            margin: 6px 0;
+        }
+        .row button { margin-top: 0; flex: 1; font-size: 12px; padding: 5px 2px; }
+        input[type=text], textarea {
+            width: 100%;
+            box-sizing: border-box;
+            font-family: monospace;
+            font-size: 12px;
+            background: #0003;
+            color: #628a41;
+            border: 1px solid #628a4155;
+            border-radius: 3px;
+            padding: 4px;
+        }
+        textarea { height: 54px; resize: none; }
+        .hint { font-size: 11px; color: #628a4199; margin: 4px 0; line-height: 1.35; }
+    </style>
+</head>
+<body>
+
+<div id="tabs">
+    <button id="tabCheats" class="on" onclick="showTab('cheats')">Cheats</button>
+    <button id="tabSkin" onclick="showTab('skin')">Skin code</button>
+</div>
+
+<div id="paneCheats">
+    <label><input type="checkbox" id="cb1"> Remove background</label>
+    <label><input type="checkbox" id="cb2"> Hide boost effect</label>
+    <label><input type="checkbox" id="cb3"> Hide menu icon</label>
+    <label><input type="checkbox" id="cb4"> Lightweight food</label>
+    <label><input type="checkbox" id="cb5"> Lightweight score</label>
+</div>
+
+<div id="paneSkin" hidden>
+    <div class="hint">
+        Follows Build a Slither: this only fills the same skin bytes the
+        builder fills. Press the game's own OK afterwards and the game sends
+        it, exactly as if you had built it by hand.
+    </div>
+
+    <div class="hint">1. Open Build a Slither. Tap A, change one bead, tap B.</div>
+    <div class="row">
+        <button onclick="snap('A')">Snapshot A</button>
+        <button onclick="snap('B')">Snapshot B</button>
+        <button onclick="diffSnaps()">Compare</button>
+    </div>
+
+    <div class="hint">2. Offset of the skin bytes, relative to the anchor.</div>
+    <div class="row">
+        <input type="text" id="skinOffset" value="-0x1c0" placeholder="-0x1c0">
+        <button onclick="useOffset()">Use</button>
+    </div>
+
+    <div class="hint">3. Skin code. NTL alphabet, one character per bead.</div>
+    <textarea id="skinCode" placeholder="zzxxccvvbbnn..."></textarea>
+    <div class="row">
+        <button onclick="readSkin()">Read</button>
+        <button onclick="writeSkin()">Write</button>
+    </div>
+</div>
+
+<div id="status"></div>
+
+    <script>
+// Position the window first. The original script did this last, so whenever
+// the memory scan failed the panel was left unpositioned as well as broken.
+setWindowRect(90, 80, 350, 400);
+setWindowDrag(0, 0, 400, 400);
+
+var ANCHOR = '31337';      // F64 sentinel that only exists while a match runs
+var baseAddress = null;
+
+function status(text) {
+    var el = document.getElementById('status');
+    if (el) el.textContent = text || '';
+}
+
+function showTab(which) {
+    document.getElementById('paneCheats').hidden = which !== 'cheats';
+    document.getElementById('paneSkin').hidden = which !== 'skin';
+    document.getElementById('tabCheats').className = which === 'cheats' ? 'on' : '';
+    document.getElementById('tabSkin').className = which === 'skin' ? 'on' : '';
+    status('');
+}
+
+// Scans on demand and returns null instead of throwing when the anchor is not
+// in memory. The original did `results[0].address` with no guard, which threw
+// on the menu screen and took the rest of the script down with it.
+function resolveBase(force) {
+    if (baseAddress && !force) return baseAddress;
+    if (typeof h5gg === 'undefined') return null;
+    try {
+        h5gg.clearResults();
+        h5gg.searchNumber(ANCHOR, 'F64', '0x270000000', '0x7100000000');
+        if (h5gg.getResultsCount() < 1) return null;
+        var results = h5gg.getResults(1, 0);
+        if (!results || !results.length || !results[0]) return null;
+        baseAddress = results[0].address;
+        return baseAddress;
+    } catch (e) {
+        return null;
+    }
+}
+
+function addressFor(offset) {
+    var base = resolveBase(false);
+    if (base === null) {
+        baseAddress = null;      // the anchor moves between matches
+        base = resolveBase(true);
+    }
+    if (base === null) return null;
+    return '0x' + (parseInt(base, 16) + offset).toString(16);
+}
+
+// Holds `onValue` at `offset` while checked, restores `offValue` when cleared.
+function bindFreeze(id, offset, onValue, offValue, intervalMs) {
+    var locker = null;
+    var box = document.getElementById(id);
+    if (!box) return;
+    box.addEventListener('change', function() {
+        try {
+            if (this.checked) {
+                var addr = addressFor(-offset);
+                if (addr === null) {
+                    this.checked = false;
+                    status('Join a game first');
+                    return;
+                }
+                locker = setInterval(function() {
+                    h5gg.setValue(addr, onValue, 'F64');
+                }, intervalMs);
+                status('');
+            } else if (locker !== null) {
+                clearInterval(locker);
+                locker = null;
+                var restore = addressFor(-offset);
+                if (restore !== null) h5gg.setValue(restore, offValue, 'F64');
+            }
+        } catch (e) {
+            status('Toggle failed');
+        }
+    });
+}
+
+bindFreeze('cb1', 0x260, 0,     20000, 250);
+bindFreeze('cb2', 0x2d8, 99999, 5.39,  250);
+bindFreeze('cb4', 0x368, 0.4,   0.91,  1);
+bindFreeze('cb5', 0x400, 75,    52,    250);
+
+// Swaps the floating menu button between a transparent image and its own art.
+// Needs no memory access, so it keeps working outside a match.
+document.getElementById('cb3').addEventListener('change', function() {
+    try {
+        setButtonImage(this.checked ? "__BLANK_ICON__" : "__REAL_ICON__");
+    } catch (e) {
+        status('Could not change the menu icon');
+    }
+});
+
+/* ------------------------------------------------------------------ *
+ * Skin code
+ *
+ * NTL's alphabet: one character per bead, the character's position in
+ * this string is its colour-group index. Taken from Wyrm's ntl_cg_map,
+ * which is the same table NTL 9.68 uses. '*' marks a disabled group.
+ * ------------------------------------------------------------------ */
+var SKIN_ALPHABET = "zxcvbnm,asdfghjklqwertyuiop123456789*0*-**";
+var SKIN_MAX = 256;          // MAX_SKIN_CODE_LEN
+var SCAN_FROM = -0x600;      // window searched for the skin bytes
+var SCAN_TO = 0x200;
+var skinOffset = null;
+var snapshots = {};
+
+// 4-byte words, not 8. An I64 read lands in a JS number, and once the high
+// bytes are large the low ones fall off the end of a double - a single changed
+// bead would compare equal. 2^32 is exact, so I32 cannot lose a byte.
+function readWord(offset) {
+    var addr = addressFor(offset);
+    if (addr === null) return null;
+    return String(h5gg.getValue(addr, 'I32'));
+}
+
+function snap(slot) {
+    try {
+        if (resolveBase(false) === null && resolveBase(true) === null) {
+            status('Join a game first');
+            return;
+        }
+        var words = [];
+        for (var off = SCAN_FROM; off < SCAN_TO; off += 4) {
+            var word = readWord(off);
+            words.push(word === null ? '?' : word);
+        }
+        snapshots[slot] = words;
+        status('Snapshot ' + slot + ': ' + words.length + ' words');
+    } catch (e) {
+        status('Snapshot failed');
+    }
+}
+
+function diffSnaps() {
+    try {
+        if (!snapshots.A || !snapshots.B) {
+            status('Take snapshot A, change a bead, then snapshot B');
+            return;
+        }
+        var hits = [];
+        for (var i = 0; i < snapshots.A.length && i < snapshots.B.length; i++) {
+            if (snapshots.A[i] !== snapshots.B[i]) {
+                var off = SCAN_FROM + i * 4;
+                hits.push((off < 0 ? '-0x' : '0x') + Math.abs(off).toString(16));
+            }
+        }
+        if (!hits.length) {
+            status('Nothing changed in the window');
+            return;
+        }
+        if (hits.length > 10) hits = hits.slice(0, 10).concat(['...']);
+        status('Changed at: ' + hits.join(' '));
+    } catch (e) {
+        status('Compare failed');
+    }
+}
+
+function parseOffset(text) {
+    if (!text) return null;
+    text = ('' + text).trim();
+    var negative = text.charAt(0) === '-';
+    if (negative) text = text.slice(1);
+    var value = parseInt(text, 16);
+    if (!isFinite(value)) return null;
+    return negative ? -value : value;
+}
+
+function useOffset() {
+    var value = parseOffset(document.getElementById('skinOffset').value);
+    if (value === null) {
+        status('Offset must look like -0x1c0');
+        return;
+    }
+    skinOffset = value;
+    status('Skin offset set to ' + (value < 0 ? '-0x' : '0x') + Math.abs(value).toString(16));
+}
+
+function requireOffset() {
+    if (skinOffset === null) useOffset();
+    return skinOffset;
+}
+
+function readSkin() {
+    try {
+        var offset = requireOffset();
+        if (offset === null) return;
+        var base = addressFor(offset);
+        if (base === null) {
+            status('Join a game first');
+            return;
+        }
+        var start = parseInt(base, 16);
+        var code = '';
+        for (var i = 0; i < SKIN_MAX; i++) {
+            var value = Number(h5gg.getValue('0x' + (start + i).toString(16), 'I8'));
+            if (!isFinite(value) || value < 0 || value >= SKIN_ALPHABET.length) break;
+            code += SKIN_ALPHABET.charAt(value);
+        }
+        document.getElementById('skinCode').value = code;
+        status(code.length ? ('Read ' + code.length + ' beads') : 'Nothing readable there');
+    } catch (e) {
+        status('Read failed');
+    }
+}
+
+function writeSkin() {
+    try {
+        var offset = requireOffset();
+        if (offset === null) return;
+        var base = addressFor(offset);
+        if (base === null) {
+            status('Join a game first');
+            return;
+        }
+        var code = (document.getElementById('skinCode').value || '').trim();
+        if (!code.length) {
+            status('Type a skin code first');
+            return;
+        }
+
+        var bytes = [];
+        for (var i = 0; i < code.length && bytes.length < SKIN_MAX; i++) {
+            var index = SKIN_ALPHABET.indexOf(code.charAt(i));
+            if (index < 0) {
+                status('Not in the alphabet: ' + code.charAt(i));
+                return;
+            }
+            bytes.push(index);
+        }
+
+        var start = parseInt(base, 16);
+        for (var j = 0; j < bytes.length; j++) {
+            h5gg.setValue('0x' + (start + j).toString(16), bytes[j], 'I8');
+        }
+        status('Wrote ' + bytes.length + ' beads. Now press OK in Build a Slither.');
+    } catch (e) {
+        status('Write failed');
+    }
+}
+
+if (resolveBase(false) === null) status('Join a game first');
+    </script>
+
+</body>
+</html>

@@ -30,12 +30,17 @@ What you *can* edit, and what this repo makes editable:
 | `Scripts/patch-mod-menu.py` | Writes `mod-ui/` back into the dylibs |
 | `Scripts/extract-mod-ui.py` | Re-reads the pages out of the dylibs (`--force` to overwrite) |
 | `Scripts/repack-ipa.ps1` | Local build: patch → test → unsigned IPA in `dist/` |
+| `Scripts/rebuild-bead-atlas.py` | Rebuilds the bead atlas on slither's own ramp |
+| `Scripts/apply-skin-atlas.py` | Injects `skin/` images into the SWF |
 | `Scripts/export-assets.ps1` | Regenerates `assets/` from the bundle's SWF |
 | `Scripts/check-mod-ui-js.py` | Parses the menu JavaScript with `node --check` |
 | `Scripts/verify-against-source-ipa.py` | Diffs the working bundle against the original IPA |
 | `Tests/bundle_contract_test.py` | Pre-flight checks that catch a broken edit |
+| `Tests/mod_ui_logic_test.js` | Runs both panels under Node against a fake H5GG |
+| `skin/` | Bead atlas sources and the Mod1 page template |
 | `.github/workflows/pack-ipa.yml` | CI build, uploads the IPA as an artifact |
 | `docs/MOD-MENU.md` | How the mod works, the zoom crash, and the fix |
+| `docs/SKINS.md` | Bead recipe, the atlas rebuild, and the skin-code tool |
 | `docs/AUDIT.md` | Teardown: what is inside the IPA and what can change |
 | `docs/BUILDING-AND-TESTING.md` | Build, test, sign and install |
 | `assets/`, `dist/` | Generated; both gitignored |
@@ -65,6 +70,12 @@ gh workflow run pack-ipa.yml -f label=my-edit
   nothing outside a match; see [docs/MOD-MENU.md](docs/MOD-MENU.md).
 - Both mod panels are in English instead of Japanese.
 - Cheat offsets, values and freeze intervals are untouched.
+- The bead atlas is rebuilt on slither.io's own gradient recipe, lifted from
+  NTL 9.68's renderer. 140 plain beads rebuilt; flags, emblems and rim-lit
+  beads left byte-identical. Only that one image changed in the SWF - the
+  other 159 are pixel-identical.
+- A **Skin code** tab writes NTL-alphabet skin codes into the same bytes
+  Build a Slither writes, so the game's own OK sends them.
 
 Nothing else moved. `Scripts/verify-against-source-ipa.py` reports exactly two
 modified files - `Mod1.dylib` and `Mod2.dylib` - both still 3,406,784 bytes,

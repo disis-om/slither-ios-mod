@@ -19,6 +19,31 @@ MACHO_MAGIC = (b"\xcf\xfa\xed\xfe", b"\xca\xfe\xba\xbe")
 failures: list[str] = []
 
 
+AOT_STUB = bytes.fromhex(
+    "010000000000000000e73487221de85ae5e4caafd542c4b480e59c9f5f")
+
+
+def walk_swf_tags(blob: bytes) -> list[tuple[int, int]]:
+    """Return (tag id, body length) for every tag in an uncompressed SWF."""
+    # Skip the header: signature, version, length, then the frame-size RECT,
+    # frame rate and frame count.
+    nbits = blob[8] >> 3
+    cursor = 8 + (5 + 4 * nbits + 7) // 8 + 4
+    tags = []
+    while cursor + 2 <= len(blob):
+        code = int.from_bytes(blob[cursor:cursor + 2], "little")
+        cursor += 2
+        tag_id, length = code >> 6, code & 0x3F
+        if length == 0x3F:
+            length = int.from_bytes(blob[cursor:cursor + 4], "little")
+            cursor += 4
+        tags.append((tag_id, length))
+        cursor += length
+        if tag_id == 0:
+            break
+    return tags
+
+
 def check(condition: bool, message: str) -> bool:
     if not condition:
         failures.append(message)
@@ -93,6 +118,26 @@ def main() -> int:
                 declared == actual,
                 f"{swf.name} header says {declared} bytes but file is {actual} "
                 "- rewrite the length field after editing an uncompressed SWF",
+            )
+
+            # Editing images with FFDec rewrites the whole file, so the tag
+            # stream is worth re-checking: the AOT stub and the symbol table
+            # are what the app actually needs to still be there.
+            blob = swf.read_bytes()
+            tags = walk_swf_tags(blob)
+            check(len(tags) == 196, f"{swf.name} has {len(tags)} tags, expected 196")
+            check(
+                any(tag == 76 for tag, _ in tags),
+                f"{swf.name} lost its SymbolClass tag",
+            )
+            abc = [length for tag, length in tags if tag == 82]
+            check(
+                abc == [29],
+                f"{swf.name} DoABC2 tags are {abc}, expected exactly one of 29 bytes",
+            )
+            check(
+                AOT_STUB in blob,
+                f"{swf.name} no longer carries the AOT DoABC2 stub",
             )
 
     # --- Mod menu pages ---------------------------------------------------
