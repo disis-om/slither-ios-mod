@@ -31,6 +31,8 @@ What you *can* edit, and what this repo makes editable:
 | `Scripts/extract-mod-ui.py` | Re-reads the pages out of the dylibs (`--force` to overwrite) |
 | `Scripts/repack-ipa.ps1` | Local build: patch → test → unsigned IPA in `dist/` |
 | `Scripts/export-assets.ps1` | Regenerates `assets/` from the bundle's SWF |
+| `Scripts/check-mod-ui-js.py` | Parses the menu JavaScript with `node --check` |
+| `Scripts/verify-against-source-ipa.py` | Diffs the working bundle against the original IPA |
 | `Tests/bundle_contract_test.py` | Pre-flight checks that catch a broken edit |
 | `.github/workflows/pack-ipa.yml` | CI build, uploads the IPA as an artifact |
 | `docs/MOD-MENU.md` | How the mod works, the zoom crash, and the fix |
@@ -63,6 +65,12 @@ gh workflow run pack-ipa.yml -f label=my-edit
   nothing outside a match; see [docs/MOD-MENU.md](docs/MOD-MENU.md).
 - Both mod panels are in English instead of Japanese.
 - Cheat offsets, values and freeze intervals are untouched.
+
+Nothing else moved. `Scripts/verify-against-source-ipa.py` reports exactly two
+modified files - `Mod1.dylib` and `Mod2.dylib` - both still 3,406,784 bytes,
+with every changed byte inside the HTML page buffer. The SWF, the `slither.io`
+executable, `Info.plist`, the AIR descriptor, the ANEs and every icon are
+byte-identical to the shipped IPA.
 
 ## How this differs from `Wyrm iOS`
 

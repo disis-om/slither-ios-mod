@@ -28,6 +28,9 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - name: Check mod menu JavaScript parses
+        run: python3 Scripts/check-mod-ui-js.py
+
       - name: Apply mod menu pages
         run: python3 Scripts/patch-mod-menu.py
 

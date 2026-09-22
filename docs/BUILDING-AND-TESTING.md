@@ -92,6 +92,37 @@ That last check matters. `slither ios.swf` is uncompressed (`FWS`), and bytes
 hex editor without rewriting that field produces a bundle that installs and
 then fails to start. FFDec's `-replace` rewrites it for you.
 
+## Proving nothing else changed
+
+The bundle is a shipped, working app; the safest edit is the smallest one. Two
+checks keep it that way.
+
+`Scripts/verify-against-source-ipa.py` diffs the working bundle against the IPA
+it was unpacked from and prints every file that differs, how its size and hash
+changed, and the exact byte range that moved:
+
+```bash
+python Scripts/verify-against-source-ipa.py
+```
+
+Anything it lists that you did not intend to change is a mistake to fix before
+packaging. After the mod menu rewrite it reports exactly two modified files,
+both `Mod*.dylib`, both the same size as before, with every changed byte inside
+the HTML page buffer at `0x000b86c0` - no Mach-O header, load command or code
+section touched, and `slither ios.swf` and the `slither.io` executable
+byte-identical to the original.
+
+`Scripts/check-mod-ui-js.py` parses the JavaScript in each `mod-ui/*.html` with
+`node --check`:
+
+```bash
+python Scripts/check-mod-ui-js.py
+```
+
+A syntax error there would not fail the build or the install - it would fail
+silently on the phone, as a dead panel or an error popup. Both the local build
+and CI run this before packaging.
+
 ## Editing the assets
 
 Assets were exported to `assets/` for browsing. To change one, replace it

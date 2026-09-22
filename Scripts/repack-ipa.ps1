@@ -40,6 +40,9 @@ if (-not $SkipChecks) {
     # mod-ui\ is the source of truth for the menu pages, and the contract test
     # catches an edit that would install but not run. Pass -SkipChecks to pack
     # the bundle exactly as it sits on disk.
+    & python (Join-Path $PSScriptRoot 'check-mod-ui-js.py')
+    if ($LASTEXITCODE -ne 0) { throw 'mod menu JavaScript does not parse' }
+
     & python (Join-Path $PSScriptRoot 'patch-mod-menu.py')
     if ($LASTEXITCODE -ne 0) { throw 'patch-mod-menu.py failed' }
 
