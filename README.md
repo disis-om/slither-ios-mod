@@ -10,7 +10,7 @@ The app is **Adobe AIR**, and AIR packages for iOS are AOT-compiled. The
 ActionScript was turned into native ARM64 and stripped out of the SWF, so
 **there is no game source to decompile** — a decompiler returns zero files, and
 that is the format working as designed, not a broken tool.
-[docs/AUDIT.md](docs/AUDIT.md) has the evidence.
+[ARCHITECTURE.md › Audit](ARCHITECTURE.md#part-1) has the evidence.
 
 What you *can* edit, and what this repo makes editable:
 
@@ -40,10 +40,7 @@ What you *can* edit, and what this repo makes editable:
 | `Tests/mod_ui_logic_test.js` | Runs both panels under Node against a fake H5GG |
 | `skin/` | Bead atlas sources and the Mod1 page template |
 | `.github/workflows/pack-ipa.yml` | CI build, uploads the IPA as an artifact |
-| `docs/MOD-MENU.md` | How the mod works, the zoom crash, and the fix |
-| `docs/SKINS.md` | Bead recipe, the atlas rebuild, and the skin-code tool |
-| `docs/AUDIT.md` | Teardown: what is inside the IPA and what can change |
-| `docs/BUILDING-AND-TESTING.md` | Build, test, sign and install |
+| `ARCHITECTURE.md` | The one reference doc: audit (what is inside the IPA and what can change), mod menu (how it works, the zoom crash and the fix), skins (bead recipe, atlas rebuild, skin-code tool), building and testing (build, test, sign, install) |
 | `assets/`, `dist/` | Generated; both gitignored |
 
 ## Quick start
@@ -68,7 +65,7 @@ gh workflow run pack-ipa.yml -f label=my-edit
 
 - The zoom `+` / `-` buttons no longer raise a JavaScript error popup. The
   cause was an unguarded `results[0].address` after a memory scan that finds
-  nothing outside a match; see [docs/MOD-MENU.md](docs/MOD-MENU.md).
+  nothing outside a match; see [ARCHITECTURE.md › Mod menu](ARCHITECTURE.md#part-2).
 - Both mod panels are in English instead of Japanese.
 - Cheat offsets, values and freeze intervals are untouched.
 - The bead atlas is rebuilt on slither.io's own gradient recipe, lifted from
